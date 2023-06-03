@@ -1,6 +1,7 @@
 #include "libs/lib.h"
 
 int main() {
-  parser();
+  char file[] = "cube.obj";
+  parser(file);
   return 0;
 }

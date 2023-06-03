@@ -4,6 +4,9 @@
 #include <math.h>
 #include <stdio.h>
 
-void parser();
+#define OK 0
+#define ERR 1
+
+int parser();
 
 #endif  // _3DVIEWER_V1_SRC_LIBS_LIB_H_
