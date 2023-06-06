@@ -123,12 +123,13 @@ check:
 	@echo "$(BLUE)-----------------------------------------$(END)"
 
 out: main
-	@echo "$(BLUE)---------------COMPILATION---------------$(END)"
+	@echo "$(BLUE)----------------EXECUTING----------------$(END)"
 	@./main 1>1.txt # 2>2.txt
 	@echo "$(BLUE)-----------------------------------------$(END)"
 
 # мой мейник
 main : clean main.o viewer.a
+	@echo "$(BLUE)---------------COMPILATION---------------$(END)"
 	@$(GC) $(CFLAGS) $(SANI) main.o -L. viewer.a  $(FLAGS_PLATFORM) -o main
 
 main.o : main.c
