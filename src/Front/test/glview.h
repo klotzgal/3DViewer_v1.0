@@ -27,9 +27,17 @@ private:
     float z;
     QTimer tmr;
 
+
+
 public:
     glView(QWidget *parent = nullptr);
-
+    GLfloat Rx;
+    GLfloat Ry;
+    GLfloat Rz;
+    GLfloat line_size;
+    GLfloat point_size;
+    GLfloat scale;
+    bool projectionOrtho;
 
     void initializeGL() override;
     void resizeGL(int w, int h) override;
@@ -37,7 +45,8 @@ public:
 
 
 private:
-    glView *ui;
+    glView *viewer;
+    ::data d = {};
 
 public slots:
     void changeZ();
