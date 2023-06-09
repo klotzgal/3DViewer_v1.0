@@ -18,7 +18,7 @@ else
 	FLAGS_PLATFORM =-lcheck -lsubunit -lrt -lm -lpthread -g
 endif
 
-all : out
+all : clean oleg.a
 
 # install: clean viewer.a
 # ifeq ("", "$(wildcard Build)")
@@ -73,6 +73,13 @@ viewer.a : libs/*.c
 	@$(GC) -g -c libs/*.c 
 	@ar rc viewer.a *.o
 	@ranlib viewer.a
+
+
+oleg.a : libs/*.c 
+	@echo "$(BLUE)---------------OLEG LIBRARY--------------$(END)"
+	@$(GC) -g -c modules/*.c 
+	@ar rc oleg.a *.o
+	@ranlib oleg.a
 
 #gcov
 gcov_report : clean lcov $(TEST).o gviewer.a

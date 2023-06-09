@@ -7,12 +7,12 @@
 #define OK 0
 #define ERR 1
 
-typedef struct {
-  int vert_count;
-  double vertexes[100];
-  int surf_count;
-  int surfaces[100];
-} data;
+typedef struct data {
+  size_t vertices_count;
+  double vertices_arr[100];
+  size_t vertex_indices_count;
+  int vertex_indices_arr[100];
+} obj_data;
 
 int parser();
 
