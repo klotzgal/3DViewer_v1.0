@@ -5,8 +5,6 @@ glView::glView(QWidget *parent)
 {
 
 //    setGeometry(400, 200, 800, 600);
-    tmr.start(100);
-    connect(&tmr, SIGNAL(timeout()), this, SLOT(changeZ()));
 
 ////    d = {8,
 ////              {0.0, 0.0, 0.0,
@@ -55,8 +53,9 @@ glView::glView(QWidget *parent)
 //                   2, 6, 8,
 //                   2, 8, 4
 //              }};
-    char file_name[] = "../../cube.obj";
+    char file_name[] = "/opt/goinfre/*/skull.obj";
     parse_obj_file(file_name, &d);
+    std::cout << d.vertices_arr << std::endl;
     Rx = 0;
     Ry = 0;
     Rz = 0;

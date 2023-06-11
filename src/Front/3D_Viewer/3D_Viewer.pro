@@ -17,6 +17,8 @@ HEADERS += \
     glview.h \
     mainwindow.h
 
+LIBS += ../../oleg.a
+
 FORMS += \
     mainwindow.ui
 

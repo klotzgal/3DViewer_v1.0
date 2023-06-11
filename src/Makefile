@@ -30,11 +30,11 @@ all : clean oleg.a
 # 	@cd Front/SmartCalc && qmake && make &> /dev/null && make clean &> /dev/null && rm Makefile && cd ../../ && mv Front/SmartCalc/SmartCalc.app Build
 # 	@echo "$(BLUE)-----------------------------------------$(END)"
 
-# uninstall: 
-# 	@echo "$(BLUE)----------------UNINSTALL----------------$(END)"
-# 	@make clean &> /dev/null
-# 	@rm -rf Build
-# 	@echo "$(BLUE)-----------------------------------------$(END)"
+uninstall: 
+	@echo "$(BLUE)----------------UNINSTALL----------------$(END)"
+	@make clean &> /dev/null
+	@rm -rf Build
+	@echo "$(BLUE)-----------------------------------------$(END)"
 
 clean :
 	@echo "$(BLUE)------------------CLEAN------------------$(END)"
@@ -134,10 +134,10 @@ out: main
 	@./main 1>1.txt # 2>2.txt
 	@echo "$(BLUE)-----------------------------------------$(END)"
 
-# мой мейник
-main : clean main.o viewer.a
+# мой мейник viewer
+main : clean main.o oleg.a
 	@echo "$(BLUE)---------------COMPILATION---------------$(END)"
-	@$(GC) $(CFLAGS) $(SANI) main.o -L. viewer.a  $(FLAGS_PLATFORM) -o main
+	@$(GC) $(CFLAGS) $(SANI) main.o -L. oleg.a  $(FLAGS_PLATFORM) -o main
 
 main.o : main.c
 	@$(GC) $(CFLAGS) $(SANI) -c main.c

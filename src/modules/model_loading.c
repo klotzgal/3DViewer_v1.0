@@ -34,7 +34,6 @@ int memory_allocation(obj_data *data) {
     // multiply by two because we will build lines that we will loop
     data->vertex_indices_arr =
         calloc(data->vertex_indices_count * 2, sizeof(int));
-
   }
   if (data->vertices_arr == NULL || data->vertex_indices_arr == NULL) {
     allocate_status = ERROR;
@@ -91,8 +90,8 @@ int parse_vertices_and_indices(FILE *file, obj_data *data) {
   while (getline(&line, &len, file) != EOF) {
     if (strncmp(line, "v ", 2) == 0) {
       vertex_counter++;
-      double x, y, z;
-      sscanf(line, "%lf %lf %lf", &x, &y, &z);
+      double x = 0, y = 0, z = 0;
+      sscanf(line, "v %lf %lf %lf", &x, &y, &z);
       data->vertices_arr[i++] = x;
       data->vertices_arr[i++] = y;
       data->vertices_arr[i++] = z;
@@ -129,10 +128,10 @@ int parse_vertices_and_indices(FILE *file, obj_data *data) {
   }
 
   // TO DO: CHECK VALIDATOR
-//  if (!data->vertices_arr[data->vertices_count * 3] ||
-//      !data->vertex_indices_arr[data->vertex_indices_count * 2]) {
-//    parse_status = ERROR;
-//  }
+  //  if (!data->vertices_arr[data->vertices_count * 3] ||
+  //      !data->vertex_indices_arr[data->vertex_indices_count * 2]) {
+  //    parse_status = ERROR;
+  //  }
 
   return parse_status;
 }
