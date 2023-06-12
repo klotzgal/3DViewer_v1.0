@@ -1,47 +1,57 @@
 #include "affine.h"
 
-void translate(double x, double y, double z, obj_data*obj) {
-  for (int i = 0; i < (int)obj->vertices_count * 3; i += 3) {
-    obj->vertices_arr[i] += x;
-  }
-  for (int i = 1; i < (int)obj->vertices_count * 3; i += 3) {
-    obj->vertices_arr[i] += y;
-  }
-  for (int i = 2; i < (int)obj->vertices_count * 3; i += 3) {
-    obj->vertices_arr[i] += z;
+void rotate_X(obj_data *obj, double angle) {
+  angle = angle * M_PI / 180;
+  for (size_t i = 0; i < obj->vertices_count * 3; i += 3) {
+    double Y = obj->vertices_arr[i + 1];
+    double Z = obj->vertices_arr[i + 2];
+    obj->vertices_arr[i + 1] = Y * cos(angle) + Z * sin(angle);
+    obj->vertices_arr[i + 2] = -Y * sin(angle) + Z * cos(angle);
   }
 }
 
-void scale(double new_size, obj_data*obj) {
-  for (int i = 0; i < (int)obj->vertices_count * 3; i += 3) {
-    obj->vertices_arr[i] *= new_size;
-  }
-  for (int i = 1; i < (int)obj->vertices_count * 3; i += 3) {
-    obj->vertices_arr[i] *= new_size;
-  }
-  for (int i = 2; i < (int)obj->vertices_count * 3; i += 3) {
-    obj->vertices_arr[i] *= new_size;
+void rotate_Y(obj_data *obj, double angle) {
+  angle = angle * M_PI / 180;
+  for (size_t i = 0; i < obj->vertices_count * 3; i += 3) {
+    double X = obj->vertices_arr[i];
+    double Z = obj->vertices_arr[i + 2];
+    obj->vertices_arr[i] = X * cos(angle) + Z * sin(angle);
+    obj->vertices_arr[i + 2] = -X * sin(angle) + Z * cos(angle);
   }
 }
 
-void rotation(double angle, int axis, obj_data*obj) {
-  double new_angle = angle * M_PI / 180;
-  for (int i = 0; i < (int)obj->vertices_count * 3; i += 3) {
-    double x = obj->vertices_arr[i];
-    double y = obj->vertices_arr[i + 1];
-    double z = obj->vertices_arr[i + 2];
-    // Поворот по X
-    if (axis == 0) {
-      obj->vertices_arr[i + 1] = y * cos(new_angle) - z * sin(new_angle);
-      obj->vertices_arr[i + 2] = y * sin(new_angle) + z * cos(new_angle);
-      // Поворот по Y
-    } else if (axis == 1) {
-      obj->vertices_arr[i] = x * cos(new_angle) + z * sin(new_angle);
-      obj->vertices_arr[i + 2] = -x * sin(new_angle) + z * cos(new_angle);
-      // Поворот по Z
-    } else if (axis == 2) {
-      obj->vertices_arr[i] = x * cos(new_angle) - y * sin(new_angle);
-      obj->vertices_arr[i + 1] = x * sin(new_angle) + y * cos(new_angle);
+void rotate_Z(obj_data *obj, double angle) {
+  angle = angle * M_PI / 180;
+  for (size_t i = 0; i < obj->vertices_count * 3; i += 3) {
+    double X = obj->vertices_arr[i];
+    double Y = obj->vertices_arr[i + 1];
+    obj->vertices_arr[i] = X * cos(angle) + Y * sin(angle);
+    obj->vertices_arr[i + 1] = -X * sin(angle) + Y * cos(angle);
+  }
+}
+
+void scale(obj_data *obj, const double k) {
+  if (k != 0) {
+    for (size_t i = 0; i < obj->vertices_count * 3; i++) {
+      obj->vertices_arr[i] *= k;
     }
+  }
+}
+
+void move_X(obj_data *obj, const double k) {
+  for (size_t i = 0; i < obj->vertices_count * 3; i += 3) {
+    obj->vertices_arr[i] += k;
+  }
+}
+
+void move_Y(obj_data *obj, const double k) {
+  for (size_t i = 1; i < obj->vertices_count * 3; i += 3) {
+    obj->vertices_arr[i] += k;
+  }
+}
+
+void move_Z(obj_data *obj, const double k) {
+  for (size_t i = 2; i < obj->vertices_count * 3; i += 3) {
+    obj->vertices_arr[i] += k;
   }
 }

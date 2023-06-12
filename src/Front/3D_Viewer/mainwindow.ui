@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1119</width>
+    <height>779</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,18 +17,30 @@
    <widget class="glView" name="Viewer" native="true">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>571</width>
-      <height>601</height>
+      <x>-30</x>
+      <y>-20</y>
+      <width>800</width>
+      <height>800</height>
      </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>800</width>
+      <height>800</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>800</width>
+      <height>800</height>
+     </size>
     </property>
    </widget>
    <widget class="QGroupBox" name="groupBox_Rotation">
     <property name="geometry">
      <rect>
-      <x>580</x>
-      <y>440</y>
+      <x>860</x>
+      <y>480</y>
       <width>201</width>
       <height>131</height>
      </rect>
@@ -82,11 +94,23 @@
        </property>
       </widget>
       <widget class="QSlider" name="horizontalSlider_rotateX">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>25</height>
+        </size>
+       </property>
        <property name="maximum">
-        <number>360</number>
+        <number>720</number>
        </property>
        <property name="pageStep">
-        <number>100</number>
+        <number>1</number>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -118,11 +142,23 @@
        </property>
       </widget>
       <widget class="QSlider" name="horizontalSlider_rotateY">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>25</height>
+        </size>
+       </property>
        <property name="maximum">
-        <number>360</number>
+        <number>720</number>
        </property>
        <property name="pageStep">
-        <number>100</number>
+        <number>1</number>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -154,11 +190,23 @@
        </property>
       </widget>
       <widget class="QSlider" name="horizontalSlider_rotateZ">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>25</height>
+        </size>
+       </property>
        <property name="maximum">
-        <number>360</number>
+        <number>720</number>
        </property>
        <property name="pageStep">
-        <number>100</number>
+        <number>1</number>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -173,8 +221,8 @@
    <widget class="QGroupBox" name="groupBox_proect">
     <property name="geometry">
      <rect>
-      <x>580</x>
-      <y>0</y>
+      <x>860</x>
+      <y>30</y>
       <width>201</width>
       <height>131</height>
      </rect>
@@ -215,10 +263,10 @@
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>580</x>
-      <y>130</y>
+      <x>860</x>
+      <y>160</y>
       <width>201</width>
-      <height>221</height>
+      <height>201</height>
      </rect>
     </property>
     <property name="title">
@@ -227,8 +275,8 @@
     <widget class="QSplitter" name="splitter">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>30</y>
+       <x>20</x>
+       <y>20</y>
        <width>171</width>
        <height>171</height>
       </rect>
@@ -330,6 +378,9 @@
        </property>
       </widget>
       <widget class="QSlider" name="horizontalSlider_scale">
+       <property name="minimum">
+        <number>1</number>
+       </property>
        <property name="maximum">
         <number>100</number>
        </property>
@@ -337,10 +388,195 @@
         <number>1</number>
        </property>
        <property name="value">
-        <number>50</number>
+        <number>1</number>
+       </property>
+       <property name="sliderPosition">
+        <number>1</number>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_Rotation_2">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>360</y>
+      <width>201</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Movment</string>
+    </property>
+    <widget class="QSplitter" name="splitter_Rxyz_3">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>30</y>
+       <width>170</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>170</width>
+       <height>100</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>89</height>
+      </size>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <widget class="QSplitter" name="splitter_Rx_3">
+      <property name="minimumSize">
+       <size>
+        <width>170</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <widget class="QLabel" name="label_X">
+       <property name="text">
+        <string>X</string>
+       </property>
+      </widget>
+      <widget class="QSlider" name="horizontalSlider_moveX">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="pageStep">
+        <number>1</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="tickPosition">
+        <enum>QSlider::NoTicks</enum>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QSplitter" name="splitter_Ry_3">
+      <property name="minimumSize">
+       <size>
+        <width>170</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <widget class="QLabel" name="label_Y">
+       <property name="text">
+        <string>Y</string>
+       </property>
+      </widget>
+      <widget class="QSlider" name="horizontalSlider_moveY">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="pageStep">
+        <number>1</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="tickPosition">
+        <enum>QSlider::NoTicks</enum>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QSplitter" name="splitter_Rz_3">
+      <property name="minimumSize">
+       <size>
+        <width>170</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <widget class="QLabel" name="label_Z">
+       <property name="text">
+        <string>Z</string>
+       </property>
+      </widget>
+      <widget class="QSlider" name="horizontalSlider_moveZ">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="pageStep">
+        <number>1</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="tickPosition">
+        <enum>QSlider::NoTicks</enum>
        </property>
       </widget>
      </widget>

@@ -1,6 +1,5 @@
-.PHONY: all build static install uninstall rebuild dist test gcov_report clean
+.PHONY: all build install uninstall rebuild dist test gcov_report clean
 OS :=$(shell uname -s)
-NAME :=$(shell whoami)
 GC=gcc
 CFLAGS=-std=c11 -Wall -Wextra -Werror -g
 TEST=Tests/test
@@ -18,17 +17,17 @@ else
 	FLAGS_PLATFORM =-lcheck -lsubunit -lrt -lm -lpthread -g
 endif
 
-all : clean oleg.a
+all : clean viewer.a
 
-# install: clean viewer.a
-# ifeq ("", "$(wildcard Build)")
-# 	@mkdir Build
-# else
-# 	@rm -rf Build/*
-# endif
-# 	@echo "$(BLUE)-----------------INSTALL-----------------$(END)"
-# 	@cd Front/SmartCalc && qmake && make &> /dev/null && make clean &> /dev/null && rm Makefile && cd ../../ && mv Front/SmartCalc/SmartCalc.app Build
-# 	@echo "$(BLUE)-----------------------------------------$(END)"
+install: clean viewer.a
+ifeq ("", "$(wildcard Build)")
+	@mkdir Build
+else
+	@rm -rf Build/*
+endif
+	@echo "$(BLUE)-----------------INSTALL-----------------$(END)"
+	@cd Front/3D_Viewer && qmake && make &> /dev/null && make clean &> /dev/null && rm Makefile && cd ../../ && mv Front/3D_Viewer/3D_Viewer.app Build
+	@echo "$(BLUE)-----------------------------------------$(END)"
 
 uninstall: 
 	@echo "$(BLUE)----------------UNINSTALL----------------$(END)"
@@ -40,18 +39,18 @@ clean :
 	@echo "$(BLUE)------------------CLEAN------------------$(END)"
 	@rm -rf *.{a,o,dSYM,out,g*} */*.{a,o,dSYM,out,g*} report test.info gcov f test main
 
-# dist: install
-# 	@echo "$(BLUE)--------------DISTRIBUTIVE---------------$(END)"
-# ifeq ("", "$(wildcard Dist_SmartCalc)")
-# 	@rm -rf Dist_SmartCalc/
-# endif
-# 	@mkdir Dist_SmartCalc/
-# 	@mkdir Dist_SmartCalc/src
-# 	@mv ./Build/SmartCalc.app Dist_SmartCalc/src/
-# 	@tar cvzf Dist_SmartCalc.tgz Dist_SmartCalc/ &>/dev/null
-# 	@rm -rf Dist_SmartCalc/
-# 	@rmdir Build
-# 	@echo "$(BLUE)-----------------------------------------$(END)"
+dist: install
+	@echo "$(BLUE)--------------DISTRIBUTIVE---------------$(END)"
+ifeq ("", "$(wildcard Dist_3D_Viewer)")
+	@rm -rf Dist_3D_Viewer/
+endif
+	@mkdir Dist_3D_Viewer/
+	@mkdir Dist_3D_Viewer/src
+	@mv ./Build/3D_Viewer.app Dist_3D_Viewer/src/
+	@tar cvzf Dist_3D_Viewer.tgz Dist_3D_Viewer/ &>/dev/null
+	@rm -rf Dist_3D_Viewer/
+	@rmdir Build
+	@echo "$(BLUE)-----------------------------------------$(END)"
 
 # dvi: 
 # 	@echo "$(BLUE)-------------------DVI-------------------$(END)"
@@ -68,18 +67,12 @@ $(TEST).o : $(TEST).c
 	@$(GC) $(CFLAGS) -c $(TEST).c -o $(TEST).o
 
 # библиотека для теста
-viewer.a : libs/*.c 
+
+viewer.a : modules/*.c 
 	@echo "$(BLUE)---------------JUST LIBRARY--------------$(END)"
-	@$(GC) -g -c libs/*.c 
+	@$(GC) -g -c modules/*.c 
 	@ar rc viewer.a *.o
 	@ranlib viewer.a
-
-
-oleg.a : libs/*.c 
-	@echo "$(BLUE)---------------OLEG LIBRARY--------------$(END)"
-	@$(GC) -g -c modules/*.c 
-	@ar rc oleg.a *.o
-	@ranlib oleg.a
 
 #gcov
 gcov_report : clean lcov $(TEST).o gviewer.a
@@ -94,9 +87,9 @@ gcov_report : clean lcov $(TEST).o gviewer.a
 	@echo "$(BLUE)-----------------------------------------$(END)"
 
 # библиотека для отчета
-gviewer.a : libs/*.c
+gviewer.a : modules/*.c
 	@echo "$(BLUE)---------------JUST LIBRARY--------------$(END)"
-	@$(GC) $(GCOV) -g -c llibs/*.c
+	@$(GC) $(GCOV) -g -c modules/*.c
 	@ar rc viewer.a *.o
 	@ranlib viewer.a
 
@@ -134,10 +127,10 @@ out: main
 	@./main 1>1.txt # 2>2.txt
 	@echo "$(BLUE)-----------------------------------------$(END)"
 
-# мой мейник viewer
-main : clean main.o oleg.a
+# мой мейник
+main : clean main.o viewer.a
 	@echo "$(BLUE)---------------COMPILATION---------------$(END)"
-	@$(GC) $(CFLAGS) $(SANI) main.o -L. oleg.a  $(FLAGS_PLATFORM) -o main
+	@$(GC) $(CFLAGS) $(SANI) main.o -L. viewer.a  $(FLAGS_PLATFORM) -o main
 
 main.o : main.c
 	@$(GC) $(CFLAGS) $(SANI) -c main.c
