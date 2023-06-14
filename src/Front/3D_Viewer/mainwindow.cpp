@@ -14,6 +14,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->horizontalSlider_moveX->setValue(ui->Viewer->X);
     ui->horizontalSlider_moveY->setValue(ui->Viewer->Z);
     ui->horizontalSlider_moveZ->setValue(ui->Viewer->Z);
+    ui->horizontalSlider_colorR->setValue(ui->Viewer->lineR);
+    ui->horizontalSlider_colorG->setValue(ui->Viewer->lineG);
+    ui->horizontalSlider_colorB->setValue(ui->Viewer->lineB);
     ui->horizontalSlider_scale->setValue(ui->Viewer->scale);
 }
 
@@ -112,5 +115,89 @@ void MainWindow::on_horizontalSlider_moveZ_valueChanged(int value)
     move_Z(&ui->Viewer->d, (value - ui->Viewer->Z) * ui->Viewer->max_vert / 100);
     ui->Viewer->Z = value;
     ui->Viewer->update();
+}
+
+
+
+
+void MainWindow::on_comboBox_pointType_currentIndexChanged(int index)
+{
+    ui->Viewer->pointType = index;
+    ui->Viewer->update();
+}
+
+
+void MainWindow::on_comboBox_lineType_currentIndexChanged(int index)
+{
+    ui->Viewer->lineType = index;
+    ui->Viewer->update();
+}
+
+
+void MainWindow::on_horizontalSlider_colorR_valueChanged(int value)
+{
+    if (ui->Viewer->colorOf == Line) {
+        ui->Viewer->lineR = value;
+    } else if (ui->Viewer->colorOf == Point) {
+        ui->Viewer->pointR = value;
+    } else if (ui->Viewer->colorOf == Back) {
+        ui->Viewer->backR = value;
+    }
+    ui->Viewer->update();
+}
+
+
+void MainWindow::on_horizontalSlider_colorG_valueChanged(int value)
+{
+    if (ui->Viewer->colorOf == Line) {
+        ui->Viewer->lineG = value;
+    } else if (ui->Viewer->colorOf == Point) {
+       ui->Viewer->pointG = value;
+    } else if (ui->Viewer->colorOf == Back) {
+        ui->Viewer->backG = value;
+     }
+
+    ui->Viewer->update();
+}
+
+
+void MainWindow::on_horizontalSlider_colorB_valueChanged(int value)
+{
+    if (ui->Viewer->colorOf == Line) {
+        ui->Viewer->lineB = value;
+    } else if (ui->Viewer->colorOf == Point) {
+        ui->Viewer->pointB = value;
+    } else if (ui->Viewer->colorOf == Back) {
+        ui->Viewer->backB = value;
+    }
+    ui->Viewer->update();
+}
+
+
+void MainWindow::on_comboBox_Color_currentIndexChanged(int index)
+{
+    if (index == Line) {
+        ui->Viewer->colorOf = Line;
+        std::cout << "line color" << std::endl;
+        ui->horizontalSlider_colorR->setValue(ui->Viewer->lineR);
+        ui->horizontalSlider_colorG->setValue(ui->Viewer->lineG);
+        ui->horizontalSlider_colorB->setValue(ui->Viewer->lineB);
+
+    } else if (index == Point) {
+        ui->Viewer->colorOf = Point;
+        std::cout << "point color" << std::endl;
+        ui->horizontalSlider_colorR->setValue(ui->Viewer->pointR);
+        ui->horizontalSlider_colorG->setValue(ui->Viewer->pointG);
+        ui->horizontalSlider_colorB->setValue(ui->Viewer->pointB);
+
+    } else if (index == Back) {
+        ui->Viewer->colorOf = Back;
+        std::cout << "back color" << std::endl;
+        ui->horizontalSlider_colorR->setValue(ui->Viewer->backR);
+        ui->horizontalSlider_colorG->setValue(ui->Viewer->backG);
+        ui->horizontalSlider_colorB->setValue(ui->Viewer->backB);
+
+    }
+
 }
 

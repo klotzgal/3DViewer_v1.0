@@ -17,7 +17,7 @@
    <widget class="glView" name="Viewer" native="true">
     <property name="geometry">
      <rect>
-      <x>-30</x>
+      <x>-20</x>
       <y>-20</y>
       <width>800</width>
       <height>800</height>
@@ -39,8 +39,8 @@
    <widget class="QGroupBox" name="groupBox_Rotation">
     <property name="geometry">
      <rect>
-      <x>860</x>
-      <y>480</y>
+      <x>870</x>
+      <y>640</y>
       <width>201</width>
       <height>131</height>
      </rect>
@@ -221,10 +221,10 @@
    <widget class="QGroupBox" name="groupBox_proect">
     <property name="geometry">
      <rect>
-      <x>860</x>
-      <y>30</y>
+      <x>870</x>
+      <y>0</y>
       <width>201</width>
-      <height>131</height>
+      <height>71</height>
      </rect>
     </property>
     <property name="title">
@@ -233,8 +233,8 @@
     <widget class="QRadioButton" name="radioButton_frustum">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>70</y>
+       <x>10</x>
+       <y>40</y>
        <width>131</width>
        <height>21</height>
       </rect>
@@ -246,8 +246,8 @@
     <widget class="QRadioButton" name="radioButton_ortho">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>40</y>
+       <x>10</x>
+       <y>20</y>
        <width>131</width>
        <height>21</height>
       </rect>
@@ -263,8 +263,8 @@
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>860</x>
-      <y>160</y>
+      <x>870</x>
+      <y>310</y>
       <width>201</width>
       <height>201</height>
      </rect>
@@ -400,11 +400,11 @@
      </widget>
     </widget>
    </widget>
-   <widget class="QGroupBox" name="groupBox_Rotation_2">
+   <widget class="QGroupBox" name="groupBox_Movement">
     <property name="geometry">
      <rect>
-      <x>860</x>
-      <y>360</y>
+      <x>870</x>
+      <y>510</y>
       <width>201</width>
       <height>131</height>
      </rect>
@@ -581,6 +581,267 @@
       </widget>
      </widget>
     </widget>
+   </widget>
+   <widget class="QComboBox" name="comboBox_pointType">
+    <property name="geometry">
+     <rect>
+      <x>870</x>
+      <y>70</y>
+      <width>103</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="currentText">
+     <string>None</string>
+    </property>
+    <item>
+     <property name="text">
+      <string>None</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Round</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Square</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QComboBox" name="comboBox_lineType">
+    <property name="geometry">
+     <rect>
+      <x>980</x>
+      <y>70</y>
+      <width>103</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="currentText">
+     <string>Solid</string>
+    </property>
+    <item>
+     <property name="text">
+      <string>Solid</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Dotted</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_Color">
+    <property name="geometry">
+     <rect>
+      <x>870</x>
+      <y>170</y>
+      <width>201</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Color</string>
+    </property>
+    <widget class="QSplitter" name="splitter_Rxyz_2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>30</y>
+       <width>170</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>170</width>
+       <height>100</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>89</height>
+      </size>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <widget class="QSplitter" name="splitter_Rx_2">
+      <property name="minimumSize">
+       <size>
+        <width>170</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <widget class="QLabel" name="label_lineR">
+       <property name="text">
+        <string>R</string>
+       </property>
+      </widget>
+      <widget class="QSlider" name="horizontalSlider_colorR">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="pageStep">
+        <number>1</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="tickPosition">
+        <enum>QSlider::NoTicks</enum>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QSplitter" name="splitter_Ry_2">
+      <property name="minimumSize">
+       <size>
+        <width>170</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <widget class="QLabel" name="label_lineG">
+       <property name="text">
+        <string>G</string>
+       </property>
+      </widget>
+      <widget class="QSlider" name="horizontalSlider_colorG">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="pageStep">
+        <number>1</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="tickPosition">
+        <enum>QSlider::NoTicks</enum>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QSplitter" name="splitter_Rz_2">
+      <property name="minimumSize">
+       <size>
+        <width>170</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <widget class="QLabel" name="label_lineB">
+       <property name="text">
+        <string>B</string>
+       </property>
+      </widget>
+      <widget class="QSlider" name="horizontalSlider_colorB">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="pageStep">
+        <number>1</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="tickPosition">
+        <enum>QSlider::NoTicks</enum>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QComboBox" name="comboBox_Color">
+    <property name="geometry">
+     <rect>
+      <x>870</x>
+      <y>150</y>
+      <width>171</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="currentText">
+     <string>Line color</string>
+    </property>
+    <item>
+     <property name="text">
+      <string>Line color</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Point color</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Background color</string>
+     </property>
+    </item>
    </widget>
   </widget>
  </widget>

@@ -29,6 +29,8 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+
+
 class glView : public QOpenGLWidget, protected QOpenGLFunctions
 {
 
@@ -46,7 +48,19 @@ public:
     GLint Y;
     GLint Z;
     GLfloat line_size;
+    GLint lineType;
+    GLint lineR;
+    GLint lineG;
+    GLint lineB;
+    GLint pointR;
+    GLint pointG;
+    GLint pointB;
+    GLint backR;
+    GLint backG;
+    GLint backB;
+    GLint colorOf;
     GLfloat point_size;
+    GLint pointType;
     GLfloat max_vert;
     GLint scale;
     bool projectionOrtho;
@@ -61,9 +75,15 @@ public:
 
 
 
+
 private:
     glView *viewer;
     Ui::MainWindow *Main;
+    void printPoints();
+    void printLines();
+    enum point_type { None, Round, Square };
+    enum line_type { Solid, Dotted };
+    enum colorise { Line, Point, Back };
 
 };
 

@@ -12,10 +12,21 @@ glView::glView(QWidget *parent)
     Z = 50;
 
     line_size = 5;
+    lineR = 100;
+    lineG = 0;
+    lineB = 0;
+    pointR = 0;
+    pointG = 100;
+    pointB = 0;
+    backR = 0;
+    backG = 0;
+    backB = 0;
     point_size = 6;
+    colorOf = Line;
     scale = 50;
     projectionOrtho = true;
-
+    pointType = Square;
+    lineType = Solid;
 }
 
 glView::~glView() {
@@ -25,6 +36,7 @@ glView::~glView() {
     std::ofstream out;
     out.open("settings");
     if (out.is_open()){
+        std::cout << out.is_open();
         std::cout << "file open" << std::endl;
         out << Rx << std::endl;
         out << Ry << std::endl;
@@ -37,7 +49,7 @@ glView::~glView() {
 void glView::parse_obj()
 {
 
-    char filename[] = "/opt/goinfre/klotzgal/skull.obj";
+    char filename[] = "/Users/klotzgal/Desktop/kl/3DViewer_v1.0/src/tmp/skull.obj";
 //    char filename[] = "/Users/klotzgal/Desktop/kl/3DViewer_v1.0/src/tmp/IphoneX.obj";
 //    char filename[] = "/Users/klotzgal/Desktop/kl/3DViewer_v1.0/src/tmp/rhino_pose1.obj";
 //    char filename[] = "/Users/klotzgal/Desktop/kl/3DViewer_v1.0/src/tmp/katana.obj";
@@ -63,14 +75,14 @@ void glView::resizeGL(int w, int h) {
 
 void glView::paintGL() {
     resize(800, 800);
-    glClearColor(0, 0, 0, 0);
+    glClearColor(backR * 0.01, backG * 0.01, backB * 0.01, 0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     if (projectionOrtho) {
-        glOrtho(-max_vert, max_vert, -max_vert, max_vert, -2.0 * max_vert, 1000 * max_vert);
+        glOrtho(-max_vert * 1.2, max_vert * 1.2, -max_vert * 1.2, max_vert * 1.2, -2.0 * max_vert, 1000 * max_vert);
     } else {
-        glFrustum(-max_vert, max_vert, -max_vert, max_vert, 120 * max_vert , 1000 * max_vert);
+        glFrustum(-max_vert * 1.2, max_vert * 1.2, -max_vert * 1.2, max_vert * 1.2, 120 * max_vert , 1000 * max_vert);
         glTranslatef(0, 0, -124 * max_vert );
     }
 
@@ -78,21 +90,38 @@ void glView::paintGL() {
 //    glRotatef(Ry, 0, 1, 0); // поворот на Ry по y
 //    glRotatef(Rz, 0, 0, 1); // поворот на Rz по z
 //    glScalef( 1/max_vert, 1/max_vert, 1/max_vert); // размер
-
-    glPointSize(point_size);
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_DOUBLE, 0, d.vertices_arr);
-
-    glColor3f(0, 1, 0);
-    glDrawArrays(GL_POINTS, 0, d.vertices_count); // точки
-
-    glColor3f(1, 0, 0);
-    glLineWidth(line_size);
-    glDrawElements(GL_LINES, d.vertex_indices_count * 2, GL_UNSIGNED_INT, d.vertex_indices_arr); // грани
+    if (pointType != None) {
+        printPoints();
+    }
+    printLines();
     glDisableClientState(GL_VERTEX_ARRAY);
 
     if (glGetError()) std::cout << glGetError() << std::endl;
 
+}
+
+
+void glView::printPoints() {
+    if (pointType == Round) glEnable(GL_POINT_SMOOTH);
+    glPointSize(point_size);
+    glColor3f(pointR * 0.01, pointG * 0.01, pointB * 0.01);
+    glDrawArrays(GL_POINTS, 0, d.vertices_count); // точки
+    if (pointType == Round) glDisable(GL_POINT_SMOOTH);
+}
+
+void glView::printLines(){
+    if (lineType == Dotted) {
+        glEnable(GL_LINE_STIPPLE);
+//        glLineStipple(1, 0x3333);
+        glLineStipple(3, 0x00FF);
+    }
+
+    glLineWidth(line_size);
+    glColor3f(lineR * 0.01, lineG * 0.01, lineB * 0.01);
+    glDrawElements(GL_LINES, d.vertex_indices_count * 2, GL_UNSIGNED_INT, d.vertex_indices_arr); // грани
+    if (lineType == Dotted) glEnable(GL_LINE_STIPPLE);
 }
 
 

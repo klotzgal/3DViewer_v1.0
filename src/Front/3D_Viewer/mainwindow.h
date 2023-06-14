@@ -13,6 +13,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    enum colorise { Line, Point, Back };
 
 private slots:
     void on_horizontalSlider_rotateX_valueChanged(int angle);
@@ -36,6 +37,18 @@ private slots:
     void on_horizontalSlider_moveY_valueChanged(int value);
 
     void on_horizontalSlider_moveZ_valueChanged(int value);
+
+    void on_comboBox_pointType_currentIndexChanged(int index);
+
+    void on_comboBox_lineType_currentIndexChanged(int index);
+
+    void on_horizontalSlider_colorR_valueChanged(int value);
+
+    void on_horizontalSlider_colorG_valueChanged(int value);
+
+    void on_horizontalSlider_colorB_valueChanged(int value);
+
+    void on_comboBox_Color_currentIndexChanged(int index);
 
 private:
     Ui::MainWindow *ui;
