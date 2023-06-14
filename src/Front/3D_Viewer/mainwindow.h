@@ -50,7 +50,11 @@ private slots:
 
     void on_comboBox_Color_currentIndexChanged(int index);
 
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
+    glView *vi;
+
 };
 #endif // MAINWINDOW_H

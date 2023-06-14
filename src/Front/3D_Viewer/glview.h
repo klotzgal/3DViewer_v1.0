@@ -69,12 +69,7 @@ public:
     void paintGL() override;
     ::obj_data d = {};
     void parse_obj();
-
-
-
-
-
-
+    void take_picture();
 
 private:
     glView *viewer;
@@ -84,6 +79,8 @@ private:
     enum point_type { None, Round, Square };
     enum line_type { Solid, Dotted };
     enum colorise { Line, Point, Back };
+
+
 
 };
 

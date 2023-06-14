@@ -18,6 +18,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->horizontalSlider_colorG->setValue(ui->Viewer->lineG);
     ui->horizontalSlider_colorB->setValue(ui->Viewer->lineB);
     ui->horizontalSlider_scale->setValue(ui->Viewer->scale);
+//    connect(ui->pushButton, SIGNAL(clicked()), , SLOT(take_picture()));
+
+
 }
 
 MainWindow::~MainWindow()
@@ -58,7 +61,7 @@ void MainWindow::on_horizontalSlider_rotateZ_valueChanged(int angle)
 void MainWindow::on_horizontalSlider_scale_valueChanged(int value)
 {
     GLdouble s =  (double)value / ui->Viewer->scale;
-    std::cout << s << std::endl;
+//    std::cout << s << std::endl;
 
     scale(&ui->Viewer->d, s);
     ui->Viewer->scale = value;
@@ -178,26 +181,32 @@ void MainWindow::on_comboBox_Color_currentIndexChanged(int index)
 {
     if (index == Line) {
         ui->Viewer->colorOf = Line;
-        std::cout << "line color" << std::endl;
+//        std::cout << "line color" << std::endl;
         ui->horizontalSlider_colorR->setValue(ui->Viewer->lineR);
         ui->horizontalSlider_colorG->setValue(ui->Viewer->lineG);
         ui->horizontalSlider_colorB->setValue(ui->Viewer->lineB);
 
     } else if (index == Point) {
         ui->Viewer->colorOf = Point;
-        std::cout << "point color" << std::endl;
+//        std::cout << "point color" << std::endl;
         ui->horizontalSlider_colorR->setValue(ui->Viewer->pointR);
         ui->horizontalSlider_colorG->setValue(ui->Viewer->pointG);
         ui->horizontalSlider_colorB->setValue(ui->Viewer->pointB);
 
     } else if (index == Back) {
         ui->Viewer->colorOf = Back;
-        std::cout << "back color" << std::endl;
+//        std::cout << "back color" << std::endl;
         ui->horizontalSlider_colorR->setValue(ui->Viewer->backR);
         ui->horizontalSlider_colorG->setValue(ui->Viewer->backG);
         ui->horizontalSlider_colorB->setValue(ui->Viewer->backB);
 
     }
 
+}
+
+
+void MainWindow::on_pushButton_clicked()
+{
+    ui->Viewer->take_picture();
 }
 

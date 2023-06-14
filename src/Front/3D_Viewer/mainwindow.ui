@@ -843,6 +843,19 @@
      </property>
     </item>
    </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>870</x>
+      <y>101</y>
+      <width>51</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Foto</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <customwidgets>

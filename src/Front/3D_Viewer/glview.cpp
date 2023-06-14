@@ -125,3 +125,9 @@ void glView::printLines(){
 }
 
 
+void glView::take_picture() {
+    QImage image = QOpenGLWidget::grabFramebuffer();
+    image.save("../../../foto", "jpeg");
+    std::cout << "picture" << std::endl;
+}
+
