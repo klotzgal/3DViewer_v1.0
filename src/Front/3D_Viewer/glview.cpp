@@ -4,6 +4,8 @@ glView::glView(QWidget *parent)
     : QOpenGLWidget(parent)
 {
     parse_obj();
+    settings = new QSettings("XXX", "3D_Viewer", this);
+    load_settings();
     Rx = 360;
     Ry = 360;
     Rz = 360;
@@ -11,26 +13,29 @@ glView::glView(QWidget *parent)
     Y = 50;
     Z = 50;
 
-    line_size = 5;
-    lineR = 100;
-    lineG = 0;
-    lineB = 0;
-    pointR = 0;
-    pointG = 100;
-    pointB = 0;
-    backR = 0;
-    backG = 0;
-    backB = 0;
-    point_size = 6;
-    colorOf = Line;
-    scale = 50;
-    projectionOrtho = true;
-    pointType = Square;
-    lineType = Solid;
+//    line_size = 5;
+//    lineR = 100;
+//    lineG = 0;
+//    lineB = 0;
+//    pointR = 0;
+//    pointG = 100;
+//    pointB = 0;
+//    backR = 0;
+//    backG = 0;
+//    backB = 0;
+//    point_size = 6;
+    scale = 20;
+
+//    colorOf = Line;
+//    projectionOrtho = true;
+//    pointType = Square;
+//    lineType = Solid;
+
 }
 
 glView::~glView() {
     std::cout << "destructor test" << std::endl;
+    save_settings();
     if (d.vertex_indices_arr) free(d.vertex_indices_arr);
     if (d.vertices_arr) free(d.vertices_arr);
     std::ofstream out;
@@ -42,13 +47,13 @@ glView::~glView() {
         out << Ry << std::endl;
         out << Rz << std::endl;
         out.close();
-    } else {std::cout << "Not open" << std::endl;
+    } else {
+        std::cout << "Not open" << std::endl;
     }
 }
 
 void glView::parse_obj()
 {
-
     char filename[] = "/Users/klotzgal/Desktop/kl/3DViewer_v1.0/src/tmp/skull.obj";
 //    char filename[] = "/Users/klotzgal/Desktop/kl/3DViewer_v1.0/src/tmp/IphoneX.obj";
 //    char filename[] = "/Users/klotzgal/Desktop/kl/3DViewer_v1.0/src/tmp/rhino_pose1.obj";
@@ -60,7 +65,6 @@ void glView::parse_obj()
     for (size_t i = 0; i < d.vertices_count * 3; i++) if (abs(d.vertices_arr[i]) > max_vert) max_vert = abs(d.vertices_arr[i]);
     std::cout << max_vert << std::endl;
     update();
-
 }
 
 void glView::initializeGL() {
@@ -98,7 +102,7 @@ void glView::paintGL() {
     printLines();
     glDisableClientState(GL_VERTEX_ARRAY);
 
-    if (glGetError()) std::cout << glGetError() << std::endl;
+//    if (glGetError()) std::cout << glGetError() << std::endl;
 
 }
 
@@ -121,7 +125,7 @@ void glView::printLines(){
     glLineWidth(line_size);
     glColor3f(lineR * 0.01, lineG * 0.01, lineB * 0.01);
     glDrawElements(GL_LINES, d.vertex_indices_count * 2, GL_UNSIGNED_INT, d.vertex_indices_arr); // грани
-    if (lineType == Dotted) glEnable(GL_LINE_STIPPLE);
+    if (lineType == Dotted) glDisable(GL_LINE_STIPPLE);
 }
 
 
@@ -130,4 +134,78 @@ void glView::take_picture() {
     image.save("../../../foto", "jpeg");
     std::cout << "picture" << std::endl;
 }
+
+void glView::save_settings()
+{
+//    settings->setValue("lineType", lineType);
+
+    settings->beginGroup("Color");
+    settings->setValue("lineR", lineR);
+    settings->setValue("lineG", lineG);
+    settings->setValue("lineB", lineB);
+    settings->setValue("pointR", pointR);
+    settings->setValue("pointG", pointG);
+    settings->setValue("pointB", pointB);
+    settings->setValue("backR", backR);
+    settings->setValue("backG", backG);
+    settings->setValue("backB", backB);
+    settings->endGroup();
+    settings->beginGroup("Size");
+    settings->setValue("line_size", line_size);
+    settings->setValue("point_size", point_size);
+//    settings->setValue("scale", scale);
+    settings->endGroup();
+    settings->beginGroup("Other");
+    settings->setValue("colorOf", colorOf);
+    settings->setValue("projectionOrtho", projectionOrtho);
+    settings->setValue("pointType", pointType);
+    settings->setValue("lineType", lineType);
+    settings->endGroup();
+};
+
+void glView::load_settings()
+{
+//    std::cout << "lineType settings " << settings->value("lineType", Solid).toInt() << std::endl;
+//    lineType = settings->value("lineType", Solid).toInt();
+
+    settings->beginGroup("Color");
+    lineR = settings->value("lineR", 100 ).toInt();
+    lineG = settings->value("lineG", 0 ).toInt();
+    lineB = settings->value("lineB", 0 ).toInt();
+    pointR = settings->value("pointR", 0 ).toInt();
+    pointG = settings->value("pointG", 100 ).toInt();
+    pointB = settings->value("pointB", 0 ).toInt();
+    backR = settings->value("backR", 0 ).toInt();
+    backG = settings->value("backG", 0 ).toInt();
+    backB = settings->value("backB", 0 ).toInt();
+    settings->endGroup();
+    settings->beginGroup("Size");
+    line_size = settings->value("line_size", 5.0f).toFloat();
+    point_size = settings->value("line_size", 6.0f).toFloat();
+//    scale = settings->value("scale", 50).toFloat();
+    settings->endGroup();
+    settings->beginGroup("Other");
+    colorOf = settings->value("colorOf", Line).toInt();
+    projectionOrtho = settings->value("projectionOrtho", true).toInt();
+    pointType = settings->value("pointType", Square).toInt();
+    lineType = settings->value("lineType", Solid).toInt();
+    settings->endGroup();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

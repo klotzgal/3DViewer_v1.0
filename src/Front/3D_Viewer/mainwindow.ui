@@ -306,6 +306,9 @@
        </property>
       </widget>
       <widget class="QSlider" name="horizontalSlider_line_size">
+       <property name="minimum">
+        <number>1</number>
+       </property>
        <property name="maximum">
         <number>100</number>
        </property>
@@ -342,6 +345,9 @@
        </property>
       </widget>
       <widget class="QSlider" name="horizontalSlider_point_size">
+       <property name="minimum">
+        <number>1</number>
+       </property>
        <property name="maximum">
         <number>100</number>
        </property>
@@ -592,7 +598,7 @@
      </rect>
     </property>
     <property name="currentText">
-     <string>None</string>
+     <string>Square</string>
     </property>
     <item>
      <property name="text">

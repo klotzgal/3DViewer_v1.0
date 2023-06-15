@@ -11,12 +11,9 @@
 #include <iostream>
 #include <fstream>
 //#include <QScrollArea>
+#include <QSettings>
 
-// Видео
-//#include <gl/GL.H>
-//#include <gl/GLU.h>
-//#pragma comment(lib, "opengl32.lib")
-//#pragma comment(lib, "GLU32.lib")
+
 
 extern "C" {
 //    #include "../../libs/lib.h"
@@ -48,6 +45,7 @@ public:
     GLint Y;
     GLint Z;
     GLfloat line_size;
+    GLfloat point_size;
     GLint lineType;
     GLint lineR;
     GLint lineG;
@@ -59,7 +57,6 @@ public:
     GLint backG;
     GLint backB;
     GLint colorOf;
-    GLfloat point_size;
     GLint pointType;
     GLfloat max_vert;
     GLint scale;
@@ -70,6 +67,8 @@ public:
     ::obj_data d = {};
     void parse_obj();
     void take_picture();
+    void save_settings();
+    void load_settings();
 
 private:
     glView *viewer;
@@ -80,7 +79,7 @@ private:
     enum line_type { Solid, Dotted };
     enum colorise { Line, Point, Back };
 
-
+    QSettings* settings;
 
 };
 

@@ -17,7 +17,25 @@ MainWindow::MainWindow(QWidget *parent)
     ui->horizontalSlider_colorR->setValue(ui->Viewer->lineR);
     ui->horizontalSlider_colorG->setValue(ui->Viewer->lineG);
     ui->horizontalSlider_colorB->setValue(ui->Viewer->lineB);
+
     ui->horizontalSlider_scale->setValue(ui->Viewer->scale);
+    ui->horizontalSlider_point_size->setValue(ui->Viewer->point_size);
+    ui->horizontalSlider_line_size->setValue(ui->Viewer->line_size);
+
+    ui->comboBox_Color->setCurrentIndex(ui->Viewer->colorOf);
+    if (ui->Viewer->projectionOrtho) {
+        ui->radioButton_ortho->setChecked(true);
+        ui->radioButton_frustum->setChecked(false);
+    } else {
+        ui->radioButton_ortho->setChecked(false);
+        ui->radioButton_frustum->setChecked(true);
+    }
+    ui->comboBox_pointType->setCurrentIndex(ui->Viewer->pointType);
+    ui->comboBox_lineType->setCurrentIndex(ui->Viewer->lineType);
+    //    colorOf
+    //    projectionOrtho
+    //    pointType
+    //    lineType
 //    connect(ui->pushButton, SIGNAL(clicked()), , SLOT(take_picture()));
 
 
