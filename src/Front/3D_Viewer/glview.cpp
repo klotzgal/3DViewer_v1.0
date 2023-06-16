@@ -12,7 +12,7 @@ glView::glView(QWidget *parent)
     X = 50;
     Y = 50;
     Z = 50;
-
+    scale = 20;
 //    line_size = 5;
 //    lineR = 100;
 //    lineG = 0;
@@ -23,9 +23,7 @@ glView::glView(QWidget *parent)
 //    backR = 0;
 //    backG = 0;
 //    backB = 0;
-//    point_size = 6;
-    scale = 20;
-
+//    point_size = 6; 
 //    colorOf = Line;
 //    projectionOrtho = true;
 //    pointType = Square;
@@ -34,7 +32,7 @@ glView::glView(QWidget *parent)
 }
 
 glView::~glView() {
-    std::cout << "destructor test" << std::endl;
+    std::cout << "destructor test\n";
     save_settings();
     if (d.vertex_indices_arr) free(d.vertex_indices_arr);
     if (d.vertices_arr) free(d.vertices_arr);
@@ -42,13 +40,13 @@ glView::~glView() {
     out.open("settings");
     if (out.is_open()){
         std::cout << out.is_open();
-        std::cout << "file open" << std::endl;
+        std::cout << "file open\n";
         out << Rx << std::endl;
         out << Ry << std::endl;
         out << Rz << std::endl;
         out.close();
     } else {
-        std::cout << "Not open" << std::endl;
+        std::cout << "Not open\n";
     }
 }
 
@@ -90,10 +88,6 @@ void glView::paintGL() {
         glTranslatef(0, 0, -124 * max_vert );
     }
 
-//    glRotatef(Rx, 1, 0, 0); // поворот на Rx по x
-//    glRotatef(Ry, 0, 1, 0); // поворот на Ry по y
-//    glRotatef(Rz, 0, 0, 1); // поворот на Rz по z
-//    glScalef( 1/max_vert, 1/max_vert, 1/max_vert); // размер
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_DOUBLE, 0, d.vertices_arr);
     if (pointType != None) {
@@ -121,7 +115,6 @@ void glView::printLines(){
 //        glLineStipple(1, 0x3333);
         glLineStipple(3, 0x00FF);
     }
-
     glLineWidth(line_size);
     glColor3f(lineR * 0.01, lineG * 0.01, lineB * 0.01);
     glDrawElements(GL_LINES, d.vertex_indices_count * 2, GL_UNSIGNED_INT, d.vertex_indices_arr); // грани
@@ -129,16 +122,32 @@ void glView::printLines(){
 }
 
 
-void glView::take_picture() {
+void glView::save_picture() {
     QImage image = QOpenGLWidget::grabFramebuffer();
-    image.save("../../../foto", "jpeg");
-    std::cout << "picture" << std::endl;
+    QDir dir = QDir::current();
+    dir.makeAbsolute();
+    dir.cd("../../..");
+    filename = dir.path() + "foto";
+
+    image.save(filename, "jpeg");
+    qDebug() << filename;
+}
+
+void glView::save_gif()
+{
+    gif = new QGifImage();
+    QImage image = QOpenGLWidget::grabFramebuffer();
+    gif->addFrame(image, -1);
+    QDir dir = QDir::current();
+    dir.makeAbsolute();
+    dir.cd("../../..");
+    filename = dir.path() + "/3D_Viever.gif";
+    gif->save(filename);
+    delete gif;
 }
 
 void glView::save_settings()
 {
-//    settings->setValue("lineType", lineType);
-
     settings->beginGroup("Color");
     settings->setValue("lineR", lineR);
     settings->setValue("lineG", lineG);
@@ -165,9 +174,6 @@ void glView::save_settings()
 
 void glView::load_settings()
 {
-//    std::cout << "lineType settings " << settings->value("lineType", Solid).toInt() << std::endl;
-//    lineType = settings->value("lineType", Solid).toInt();
-
     settings->beginGroup("Color");
     lineR = settings->value("lineR", 100 ).toInt();
     lineG = settings->value("lineG", 0 ).toInt();

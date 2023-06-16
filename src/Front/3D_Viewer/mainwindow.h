@@ -50,7 +50,9 @@ private slots:
 
     void on_comboBox_Color_currentIndexChanged(int index);
 
-    void on_pushButton_clicked();
+    void on_pushButton_foto_clicked();
+
+    void on_pushButton_gif_clicked();
 
 private:
     Ui::MainWindow *ui;

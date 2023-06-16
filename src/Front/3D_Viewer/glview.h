@@ -12,6 +12,9 @@
 #include <fstream>
 //#include <QScrollArea>
 #include <QSettings>
+#include <QDir>
+#include "QtGifImage/src/gifimage/qgifimage.h"
+//#include "qgifimage.h"
 
 
 
@@ -66,9 +69,12 @@ public:
     void paintGL() override;
     ::obj_data d = {};
     void parse_obj();
-    void take_picture();
+    void save_picture();
+    void save_gif();
     void save_settings();
     void load_settings();
+    QString filename;
+    QGifImage* gif;
 
 private:
     glView *viewer;

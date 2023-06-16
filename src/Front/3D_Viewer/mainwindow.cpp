@@ -199,21 +199,18 @@ void MainWindow::on_comboBox_Color_currentIndexChanged(int index)
 {
     if (index == Line) {
         ui->Viewer->colorOf = Line;
-//        std::cout << "line color" << std::endl;
         ui->horizontalSlider_colorR->setValue(ui->Viewer->lineR);
         ui->horizontalSlider_colorG->setValue(ui->Viewer->lineG);
         ui->horizontalSlider_colorB->setValue(ui->Viewer->lineB);
 
     } else if (index == Point) {
         ui->Viewer->colorOf = Point;
-//        std::cout << "point color" << std::endl;
         ui->horizontalSlider_colorR->setValue(ui->Viewer->pointR);
         ui->horizontalSlider_colorG->setValue(ui->Viewer->pointG);
         ui->horizontalSlider_colorB->setValue(ui->Viewer->pointB);
 
     } else if (index == Back) {
         ui->Viewer->colorOf = Back;
-//        std::cout << "back color" << std::endl;
         ui->horizontalSlider_colorR->setValue(ui->Viewer->backR);
         ui->horizontalSlider_colorG->setValue(ui->Viewer->backG);
         ui->horizontalSlider_colorB->setValue(ui->Viewer->backB);
@@ -223,8 +220,16 @@ void MainWindow::on_comboBox_Color_currentIndexChanged(int index)
 }
 
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_pushButton_foto_clicked()
 {
-    ui->Viewer->take_picture();
+    ui->Viewer->save_picture();
+    ui->label->setText(ui->Viewer->filename);
+}
+
+
+void MainWindow::on_pushButton_gif_clicked()
+{
+    ui->Viewer->save_gif();
+    ui->label->setText(ui->Viewer->filename);
 }
 

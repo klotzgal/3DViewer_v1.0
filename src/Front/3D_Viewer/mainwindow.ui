@@ -35,6 +35,19 @@
       <height>800</height>
      </size>
     </property>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>660</y>
+       <width>781</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_Rotation">
     <property name="geometry">
@@ -598,7 +611,7 @@
      </rect>
     </property>
     <property name="currentText">
-     <string>Square</string>
+     <string>None</string>
     </property>
     <item>
      <property name="text">
@@ -849,7 +862,7 @@
      </property>
     </item>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="pushButton_foto">
     <property name="geometry">
      <rect>
       <x>870</x>
@@ -860,6 +873,19 @@
     </property>
     <property name="text">
      <string>Foto</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_gif">
+    <property name="geometry">
+     <rect>
+      <x>940</x>
+      <y>100</y>
+      <width>51</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Gif</string>
     </property>
    </widget>
   </widget>

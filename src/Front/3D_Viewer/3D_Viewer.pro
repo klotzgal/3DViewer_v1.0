@@ -9,11 +9,26 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    QtGifImage/src/3rdParty/giflib/dgif_lib.c \
+    QtGifImage/src/3rdParty/giflib/egif_lib.c \
+    QtGifImage/src/3rdParty/giflib/gif_err.c \
+    QtGifImage/src/3rdParty/giflib/gif_font.c \
+    QtGifImage/src/3rdParty/giflib/gif_hash.c \
+    QtGifImage/src/3rdParty/giflib/gifalloc.c \
+    QtGifImage/src/3rdParty/giflib/quantize.c \
+    QtGifImage/src/gifimage/qgifimage.cpp \
     glview.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+
 
 HEADERS += \
+    QtGifImage/src/3rdParty/giflib/gif_hash.h \
+    QtGifImage/src/3rdParty/giflib/gif_lib.h \
+    QtGifImage/src/3rdParty/giflib/gif_lib_private.h \
+    QtGifImage/src/gifimage/qgifglobal.h \
+    QtGifImage/src/gifimage/qgifimage.h \
+    QtGifImage/src/gifimage/qgifimage_p.h \
     glview.h \
     mainwindow.h
 
