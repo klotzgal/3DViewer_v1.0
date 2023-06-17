@@ -8,37 +8,32 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
     setWindowTitle("3D Viewer");
+    // повороты и смещения
     ui->horizontalSlider_rotateX->setValue(ui->Viewer->Rx);
     ui->horizontalSlider_rotateY->setValue(ui->Viewer->Ry);
     ui->horizontalSlider_rotateZ->setValue(ui->Viewer->Rz);
     ui->horizontalSlider_moveX->setValue(ui->Viewer->X);
     ui->horizontalSlider_moveY->setValue(ui->Viewer->Z);
     ui->horizontalSlider_moveZ->setValue(ui->Viewer->Z);
+    // цвета
+    ui->radioButton_line_color->setChecked(true);
+    ui->radioButton_point_color->setChecked(false);
+    ui->radioButton_back_color->setChecked(false);
     ui->horizontalSlider_colorR->setValue(ui->Viewer->lineR);
     ui->horizontalSlider_colorG->setValue(ui->Viewer->lineG);
     ui->horizontalSlider_colorB->setValue(ui->Viewer->lineB);
-
+    // размеры
     ui->horizontalSlider_scale->setValue(ui->Viewer->scale);
     ui->horizontalSlider_point_size->setValue(ui->Viewer->point_size);
     ui->horizontalSlider_line_size->setValue(ui->Viewer->line_size);
 
-    ui->comboBox_Color->setCurrentIndex(ui->Viewer->colorOf);
-    if (ui->Viewer->projectionOrtho) {
-        ui->radioButton_ortho->setChecked(true);
-        ui->radioButton_frustum->setChecked(false);
-    } else {
-        ui->radioButton_ortho->setChecked(false);
-        ui->radioButton_frustum->setChecked(true);
-    }
+
+
+
+    // типы
+    ui->comboBox_projection->setCurrentIndex(!ui->Viewer->projectionOrtho);
     ui->comboBox_pointType->setCurrentIndex(ui->Viewer->pointType);
     ui->comboBox_lineType->setCurrentIndex(ui->Viewer->lineType);
-    //    colorOf
-    //    projectionOrtho
-    //    pointType
-    //    lineType
-//    connect(ui->pushButton, SIGNAL(clicked()), , SLOT(take_picture()));
-
-
 }
 
 MainWindow::~MainWindow()
@@ -76,45 +71,6 @@ void MainWindow::on_horizontalSlider_rotateZ_valueChanged(int angle)
 }
 
 
-void MainWindow::on_horizontalSlider_scale_valueChanged(int value)
-{
-    GLdouble s =  (double)value / ui->Viewer->scale;
-//    std::cout << s << std::endl;
-
-    scale(&ui->Viewer->d, s);
-    ui->Viewer->scale = value;
-    ui->Viewer->update();
-}
-
-
-void MainWindow::on_radioButton_ortho_clicked()
-{
-    ui->Viewer->projectionOrtho = true;
-    ui->Viewer->update();
-}
-
-
-void MainWindow::on_radioButton_frustum_clicked()
-{
-    ui->Viewer->projectionOrtho = false;
-    ui->Viewer->update();
-}
-
-
-void MainWindow::on_horizontalSlider_point_size_valueChanged(int value)
-{
-    ui->Viewer->point_size = value;
-    ui->Viewer->update();
-}
-
-
-void MainWindow::on_horizontalSlider_line_size_valueChanged(int value)
-{
-    ui->Viewer->line_size = value;
-    ui->Viewer->update();
-}
-
-
 void MainWindow::on_horizontalSlider_moveX_valueChanged(int value)
 {
     move_X(&ui->Viewer->d, (value - ui->Viewer->X) * ui->Viewer->max_vert / 100) ;
@@ -139,6 +95,35 @@ void MainWindow::on_horizontalSlider_moveZ_valueChanged(int value)
 }
 
 
+void MainWindow::on_horizontalSlider_scale_valueChanged(int value)
+{
+    GLdouble s =  (double)value / ui->Viewer->scale;
+    scale(&ui->Viewer->d, s);
+    ui->Viewer->scale = value;
+    ui->Viewer->update();
+}
+
+
+void MainWindow::on_comboBox_projection_currentIndexChanged(int index)
+{
+    if (index == 0) ui->Viewer->projectionOrtho = true;
+    else if (index == 1) ui->Viewer->projectionOrtho = false;
+    ui->Viewer->update();
+}
+
+
+void MainWindow::on_horizontalSlider_point_size_valueChanged(int value)
+{
+    ui->Viewer->point_size = value;
+    ui->Viewer->update();
+}
+
+
+void MainWindow::on_horizontalSlider_line_size_valueChanged(int value)
+{
+    ui->Viewer->line_size = value;
+    ui->Viewer->update();
+}
 
 
 void MainWindow::on_comboBox_pointType_currentIndexChanged(int index)
@@ -173,11 +158,10 @@ void MainWindow::on_horizontalSlider_colorG_valueChanged(int value)
     if (ui->Viewer->colorOf == Line) {
         ui->Viewer->lineG = value;
     } else if (ui->Viewer->colorOf == Point) {
-       ui->Viewer->pointG = value;
+        ui->Viewer->pointG = value;
     } else if (ui->Viewer->colorOf == Back) {
         ui->Viewer->backG = value;
-     }
-
+    }
     ui->Viewer->update();
 }
 
@@ -195,30 +179,30 @@ void MainWindow::on_horizontalSlider_colorB_valueChanged(int value)
 }
 
 
-void MainWindow::on_comboBox_Color_currentIndexChanged(int index)
-{
-    if (index == Line) {
-        ui->Viewer->colorOf = Line;
-        ui->horizontalSlider_colorR->setValue(ui->Viewer->lineR);
-        ui->horizontalSlider_colorG->setValue(ui->Viewer->lineG);
-        ui->horizontalSlider_colorB->setValue(ui->Viewer->lineB);
-
-    } else if (index == Point) {
-        ui->Viewer->colorOf = Point;
-        ui->horizontalSlider_colorR->setValue(ui->Viewer->pointR);
-        ui->horizontalSlider_colorG->setValue(ui->Viewer->pointG);
-        ui->horizontalSlider_colorB->setValue(ui->Viewer->pointB);
-
-    } else if (index == Back) {
-        ui->Viewer->colorOf = Back;
-        ui->horizontalSlider_colorR->setValue(ui->Viewer->backR);
-        ui->horizontalSlider_colorG->setValue(ui->Viewer->backG);
-        ui->horizontalSlider_colorB->setValue(ui->Viewer->backB);
-
-    }
-
+void MainWindow::on_radioButton_line_color_clicked() {
+    ui->Viewer->colorOf = Line;
+    ui->horizontalSlider_colorR->setValue(ui->Viewer->lineR);
+    ui->horizontalSlider_colorG->setValue(ui->Viewer->lineG);
+    ui->horizontalSlider_colorB->setValue(ui->Viewer->lineB);
 }
 
+
+void MainWindow::on_radioButton_point_color_clicked()
+{
+    ui->Viewer->colorOf = Point;
+    ui->horizontalSlider_colorR->setValue(ui->Viewer->pointR);
+    ui->horizontalSlider_colorG->setValue(ui->Viewer->pointG);
+    ui->horizontalSlider_colorB->setValue(ui->Viewer->pointB);
+}
+
+
+void MainWindow::on_radioButton_back_color_clicked()
+{
+    ui->Viewer->colorOf = Back;
+    ui->horizontalSlider_colorR->setValue(ui->Viewer->backR);
+    ui->horizontalSlider_colorG->setValue(ui->Viewer->backG);
+    ui->horizontalSlider_colorB->setValue(ui->Viewer->backB);
+}
 
 void MainWindow::on_pushButton_foto_clicked()
 {
@@ -227,9 +211,32 @@ void MainWindow::on_pushButton_foto_clicked()
 }
 
 
+
 void MainWindow::on_pushButton_gif_clicked()
 {
-    ui->Viewer->save_gif();
+    ui->Viewer->init_gif();
     ui->label->setText(ui->Viewer->filename);
+}
+
+
+
+
+
+
+
+
+
+
+
+void MainWindow::on_pushButton_open_obj_clicked()
+{
+    QString filename = QFileDialog::getOpenFileName(this, tr("Open object"), QDir::current().path(),
+                                            tr("Open object file(*.obj)"));
+    QByteArray array = filename.toLocal8Bit();
+    char* file_name = array.data();
+    if (file_name == ""){
+        ui->Viewer->parse_obj(file_name);
+    }
+
 }
 

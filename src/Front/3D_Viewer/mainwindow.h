@@ -24,9 +24,7 @@ private slots:
 
     void on_horizontalSlider_scale_valueChanged(int value);
 
-    void on_radioButton_ortho_clicked();
-
-    void on_radioButton_frustum_clicked();
+    void on_comboBox_projection_currentIndexChanged(int index);
 
     void on_horizontalSlider_point_size_valueChanged(int value);
 
@@ -48,11 +46,19 @@ private slots:
 
     void on_horizontalSlider_colorB_valueChanged(int value);
 
-    void on_comboBox_Color_currentIndexChanged(int index);
-
     void on_pushButton_foto_clicked();
 
     void on_pushButton_gif_clicked();
+
+
+
+    void on_radioButton_line_color_clicked();
+
+    void on_radioButton_point_color_clicked();
+
+    void on_radioButton_back_color_clicked();
+
+    void on_pushButton_open_obj_clicked();
 
 private:
     Ui::MainWindow *ui;

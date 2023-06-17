@@ -19,7 +19,7 @@ SOURCES += \
     QtGifImage/src/gifimage/qgifimage.cpp \
     glview.cpp \
     main.cpp \
-    mainwindow.cpp \
+    mainwindow.cpp
 
 
 HEADERS += \
