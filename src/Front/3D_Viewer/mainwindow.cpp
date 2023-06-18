@@ -5,9 +5,15 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-
     ui->setupUi(this);
     setWindowTitle("3D Viewer");
+    button_synchronization();
+
+}
+
+
+void MainWindow::button_synchronization()
+{
     // повороты и смещения
     ui->horizontalSlider_rotateX->setValue(ui->Viewer->Rx);
     ui->horizontalSlider_rotateY->setValue(ui->Viewer->Ry);
@@ -26,15 +32,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->horizontalSlider_scale->setValue(ui->Viewer->scale);
     ui->horizontalSlider_point_size->setValue(ui->Viewer->point_size);
     ui->horizontalSlider_line_size->setValue(ui->Viewer->line_size);
-
-
-
-
     // типы
-    ui->comboBox_projection->setCurrentIndex(!ui->Viewer->projectionOrtho);
+    ui->comboBox_projection->setCurrentIndex(ui->Viewer->projectionOrtho);
     ui->comboBox_pointType->setCurrentIndex(ui->Viewer->pointType);
     ui->comboBox_lineType->setCurrentIndex(ui->Viewer->lineType);
 }
+
 
 MainWindow::~MainWindow()
 {
@@ -43,8 +46,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_horizontalSlider_rotateX_valueChanged(int angle)
 {
-//    std::cout << "Rx = ";
-//    std::cout << angle - ui->Viewer->Rx << std::endl;
     rotate_X(&ui->Viewer->d, (angle - ui->Viewer->Rx) );
     ui->Viewer->Rx = angle;
     ui->Viewer->update();
@@ -53,8 +54,6 @@ void MainWindow::on_horizontalSlider_rotateX_valueChanged(int angle)
 
 void MainWindow::on_horizontalSlider_rotateY_valueChanged(int angle)
 {
-//    std::cout << "Ry = ";
-//    std::cout << angle - ui->Viewer->Ry << std::endl;
     rotate_Y(&ui->Viewer->d, (angle - ui->Viewer->Ry));
     ui->Viewer->Ry = angle;
     ui->Viewer->update();
@@ -63,8 +62,6 @@ void MainWindow::on_horizontalSlider_rotateY_valueChanged(int angle)
 
 void MainWindow::on_horizontalSlider_rotateZ_valueChanged(int angle)
 {
-//    std::cout << "Rz = ";
-//    std::cout << angle - ui->Viewer->Rz << std::endl;
     rotate_Z(&ui->Viewer->d, (angle - ui->Viewer->Rz));
     ui->Viewer->Rz = angle;
     ui->Viewer->update();
@@ -106,8 +103,7 @@ void MainWindow::on_horizontalSlider_scale_valueChanged(int value)
 
 void MainWindow::on_comboBox_projection_currentIndexChanged(int index)
 {
-    if (index == 0) ui->Viewer->projectionOrtho = true;
-    else if (index == 1) ui->Viewer->projectionOrtho = false;
+    ui->Viewer->projectionOrtho = index;
     ui->Viewer->update();
 }
 
@@ -211,7 +207,6 @@ void MainWindow::on_pushButton_foto_clicked()
 }
 
 
-
 void MainWindow::on_pushButton_gif_clicked()
 {
     ui->Viewer->init_gif();
@@ -219,24 +214,44 @@ void MainWindow::on_pushButton_gif_clicked()
 }
 
 
-
-
-
-
-
-
-
-
-
 void MainWindow::on_pushButton_open_obj_clicked()
 {
-    QString filename = QFileDialog::getOpenFileName(this, tr("Open object"), QDir::current().path(),
+    QString filename = QFileDialog::getOpenFileName(this, tr("Open object"), QDir::home().path(),
                                             tr("Open object file(*.obj)"));
-    QByteArray array = filename.toLocal8Bit();
-    char* file_name = array.data();
-    if (file_name == ""){
-        ui->Viewer->parse_obj(file_name);
+    if (filename.length()){
+        ui->Viewer->parse_obj(filename);
     }
-
 }
+
+
+void MainWindow::on_pushButton_reset_clicked()
+{
+    ui->Viewer->Rx = 360;
+    ui->Viewer->Ry = 360;
+    ui->Viewer->Rz = 360;
+    ui->Viewer->X = 50;
+    ui->Viewer->Y = 50;
+    ui->Viewer->Z = 50;
+    ui->Viewer->scale = 20;
+    ui->Viewer->line_size = 5;
+    ui->Viewer->lineR = 100;
+    ui->Viewer->lineG = 0;
+    ui->Viewer->lineB = 0;
+    ui->Viewer->pointR = 0;
+    ui->Viewer->pointG = 100;
+    ui->Viewer->pointB = 0;
+    ui->Viewer->backR = 0;
+    ui->Viewer->backG = 0;
+    ui->Viewer->backB = 0;
+    ui->Viewer->point_size = 6;
+    ui->Viewer->projectionOrtho = false;
+    ui->Viewer->pointType = Round;
+    ui->Viewer->lineType = Solid;
+    button_synchronization();
+    if (ui->Viewer->filename.length()){
+        ui->Viewer->parse_obj(ui->Viewer->filename);
+    }
+}
+
+
 

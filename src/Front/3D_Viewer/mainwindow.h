@@ -13,6 +13,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    enum point_type { None, Round, Square };
+    enum line_type { Solid, Dotted };
     enum colorise { Line, Point, Back };
 
 private slots:
@@ -50,8 +52,6 @@ private slots:
 
     void on_pushButton_gif_clicked();
 
-
-
     void on_radioButton_line_color_clicked();
 
     void on_radioButton_point_color_clicked();
@@ -60,9 +60,12 @@ private slots:
 
     void on_pushButton_open_obj_clicked();
 
+    void on_pushButton_reset_clicked();
+
 private:
     Ui::MainWindow *ui;
     glView *vi;
+    void button_synchronization();
 
 };
 #endif // MAINWINDOW_H

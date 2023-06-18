@@ -3,7 +3,7 @@
 glView::glView(QWidget *parent)
     : QOpenGLWidget(parent)
 {
-    char filename[] = "/Users/klotzgal/Desktop/kl/3DViewer_v1.0/src/tmp/skull.obj";
+    filename = "/Users/klotzgal/Desktop/kl/3DViewer_v1.0/src/tmp/skull.obj";
     parse_obj(filename);
     settings = new QSettings("XXX", "3D_Viewer", this);
     load_settings();
@@ -24,7 +24,7 @@ glView::glView(QWidget *parent)
 //    backR = 0;
 //    backG = 0;
 //    backB = 0;
-//    point_size = 6; 
+//    point_size = 6;
     colorOf = Line;
 //    projectionOrtho = true;
 //    pointType = Square;
@@ -41,18 +41,17 @@ glView::~glView() {
 }
 
 
-void glView::parse_obj(char* file_name)
+void glView::parse_obj(QString fileName)
 {
-//    char filename[] = "/Users/klotzgal/Desktop/kl/3DViewer_v1.0/src/tmp/skull.obj";
-//    char filename[] = "/Users/klotzgal/Desktop/kl/3DViewer_v1.0/src/tmp/IphoneX.obj";
-//    char filename[] = "/Users/klotzgal/Desktop/kl/3DViewer_v1.0/src/tmp/rhino_pose1.obj";
-//    char file_name[] = "/Users/klotzgal/Desktop/kl/3DViewer_v1.0/src/tmp/katana.obj";
-//    char filename[] = "//Users/klotzgal/Desktop/kl/3DViewer_v1.0/src/tmp/Fantasy Dragon.obj";
+    filename = fileName;
+    QByteArray array = fileName.toLocal8Bit();
+    char* file_name = array.data();
 
     if (d.vertex_indices_arr) free(d.vertex_indices_arr);
     if (d.vertices_arr) free(d.vertices_arr);
+    this->d.vertex_indices_count = 0;
+    this->d.vertices_count = 0;
     parse_obj_file(file_name, &this->d);
-
     // определение модуля максимальной координаты для задания размера
     max_vert = -9;
     for (size_t i = 0; i < d.vertices_count * 3; i++) if (abs(d.vertices_arr[i]) > max_vert) max_vert = abs(d.vertices_arr[i]);
@@ -60,9 +59,9 @@ void glView::parse_obj(char* file_name)
 }
 
 void glView::initializeGL() {
-      initializeOpenGLFunctions();
-      glEnable(GL_DEPTH_TEST);
-      resize(800, 800);
+    initializeOpenGLFunctions();
+    glEnable(GL_DEPTH_TEST);
+    resize(this->width(), this->height());
 }
 
 void glView::resizeGL(int w, int h) {
@@ -70,11 +69,13 @@ void glView::resizeGL(int w, int h) {
 }
 
 void glView::paintGL() {
-    resize(800, 800);
+    resize(this->width(), this->height());
     glClearColor(backR * 0.01, backG * 0.01, backB * 0.01, 0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
+//    glRotatef(xRot, 1, 0, 0);
+//    glRotatef(yRot, 0, 1, 0);
     if (projectionOrtho) {
         glOrtho(-max_vert * 1.2, max_vert * 1.2, -max_vert * 1.2, max_vert * 1.2, -2.0 * max_vert, 1000 * max_vert);
     } else {
@@ -100,6 +101,7 @@ void glView::printPoints() {
     if (pointType == Round) glDisable(GL_POINT_SMOOTH);
 }
 
+
 void glView::printLines(){
     if (lineType == Dotted) {
         glEnable(GL_LINE_STIPPLE);
@@ -112,9 +114,27 @@ void glView::printLines(){
 }
 
 
+void glView::mousePressEvent(QMouseEvent *mo)
+{
+    mPos = mo->pos();
+}
+
+void glView::mouseMoveEvent(QMouseEvent *mo)
+{
+    xRot = 2 / M_PI * (mPos.y() - mo->pos().y());
+    yRot = 2 / M_PI * (mo->pos().x() - mPos.x());
+
+    rotate_X(&d, xRot);
+    rotate_Y(&d, yRot);
+    mPos = mo->pos();
+    update();
+}
+
+
+
 void glView::save_picture() {
     QImage image = QOpenGLWidget::grabFramebuffer();
-    filename = QFileDialog::getSaveFileName(this, tr("Screenshot JPEG"), QDir::current().path(),
+    filename = QFileDialog::getSaveFileName(this, tr("Screenshot JPEG"), QDir::home().path(),
                                             tr("JPEG files (*.jpeg)"));
     image.save(filename, "jpeg");
 }
@@ -129,6 +149,7 @@ void glView::init_gif() {
     connect(timer, &QTimer::timeout, this, &glView::make_gif);
 }
 
+
 void glView::make_gif() {
     if (time < 50) {
         //добавление фрейма
@@ -138,7 +159,7 @@ void glView::make_gif() {
     } else {
         // сохранение
         timer->stop();
-        filename = QFileDialog::getSaveFileName(this, tr("Save GIF"), QDir::current().path(),
+        filename = QFileDialog::getSaveFileName(this, tr("Save GIF"), QDir::home().path(),
                                                 tr("GIF files (*.gif)"));
         gif->save(filename);
         delete timer;
@@ -171,6 +192,7 @@ void glView::save_settings()
     settings->setValue("lineType", lineType);
     settings->endGroup();
 };
+
 
 void glView::load_settings()
 {

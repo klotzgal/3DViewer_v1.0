@@ -64,11 +64,8 @@ public:
     GLfloat max_vert;
     GLint scale;
     bool projectionOrtho;
-    void initializeGL() override;
-    void resizeGL(int w, int h) override;
-    void paintGL() override;
     ::obj_data d = {};
-    void parse_obj(char* file_name);
+    void parse_obj(QString fileName);
     void save_picture();
     void init_gif();
     void save_settings();
@@ -82,8 +79,16 @@ public:
 private:
     glView *viewer;
     Ui::MainWindow *Main;
+    void initializeGL() override;
+    void resizeGL(int w, int h) override;
+    void paintGL() override;
     void printPoints();
     void printLines();
+    void mousePressEvent(QMouseEvent*) override;
+    void mouseMoveEvent(QMouseEvent*) override;
+    float xRot, yRot, zRot;
+    QPoint mPos;
+
 
     enum point_type { None, Round, Square };
     enum line_type { Solid, Dotted };

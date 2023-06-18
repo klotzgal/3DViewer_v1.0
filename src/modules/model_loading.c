@@ -11,7 +11,7 @@ int parse_obj_file(char *filename, obj_data *data) {
     count_vertices_and_indices(file, data);
     parse_status = memory_allocation(data);
     if (parse_status != ERROR) {
-      printf("Check status [%d]\n", parse_status);
+      // printf("Check status [%d]\n", parse_status);
       fseek(file, 0, SEEK_SET);
       parse_status = parse_vertices_and_indices(file, data);
     }

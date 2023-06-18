@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1119</width>
-    <height>779</height>
+    <width>1289</width>
+    <height>789</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,22 +17,22 @@
    <widget class="glView" name="Viewer" native="true">
     <property name="geometry">
      <rect>
-      <x>-20</x>
-      <y>-20</y>
-      <width>800</width>
-      <height>800</height>
+      <x>10</x>
+      <y>-60</y>
+      <width>600</width>
+      <height>600</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
-      <width>800</width>
-      <height>800</height>
+      <width>600</width>
+      <height>600</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
-      <width>800</width>
-      <height>800</height>
+      <width>600</width>
+      <height>600</height>
      </size>
     </property>
     <widget class="QLabel" name="label">
@@ -831,7 +831,7 @@
      <string>Line</string>
     </property>
     <property name="checked">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QRadioButton" name="radioButton_point_color">
@@ -879,16 +879,16 @@
      </rect>
     </property>
     <property name="currentText">
-     <string>Ortho</string>
+     <string>Frustum</string>
     </property>
     <item>
      <property name="text">
-      <string>Ortho</string>
+      <string>Frustum</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>Frustum</string>
+      <string>Ortho</string>
      </property>
     </item>
    </widget>
@@ -903,6 +903,19 @@
     </property>
     <property name="text">
      <string>Open new</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_reset">
+    <property name="geometry">
+     <rect>
+      <x>710</x>
+      <y>710</y>
+      <width>51</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Reset</string>
     </property>
    </widget>
   </widget>
