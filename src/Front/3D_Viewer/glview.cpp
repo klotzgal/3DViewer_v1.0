@@ -74,8 +74,6 @@ void glView::paintGL() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-//    glRotatef(xRot, 1, 0, 0);
-//    glRotatef(yRot, 0, 1, 0);
     if (projectionOrtho) {
         glOrtho(-max_vert * 1.2, max_vert * 1.2, -max_vert * 1.2, max_vert * 1.2, -2.0 * max_vert, 1000 * max_vert);
     } else {

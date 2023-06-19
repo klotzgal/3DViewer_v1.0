@@ -69,7 +69,7 @@ $(TEST).o : $(TEST).c
 # библиотека для теста
 
 viewer.a : modules/*.c 
-	@echo "$(BLUE)---------------JUST LIBRARY--------------$(END)"
+	@echo "$(BLUE)----------------C LIBRARY----------------$(END)"
 	@$(GC) -g -c modules/*.c 
 	@ar rc viewer.a *.o
 	@ranlib viewer.a

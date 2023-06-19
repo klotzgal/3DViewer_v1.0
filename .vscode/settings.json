@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "__locale": "c",
-        "functional": "c"
+        "functional": "c",
+        "model_loading.h": "c"
     }
 }
