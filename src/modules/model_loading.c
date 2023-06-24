@@ -11,7 +11,6 @@ int parse_obj_file(char *filename, obj_data *data) {
     count_vertices_and_indices(file, data);
     parse_status = memory_allocation(data);
     if (parse_status != ERROR) {
-      // printf("Check status [%d]\n", parse_status);
       fseek(file, 0, SEEK_SET);
       parse_status = parse_vertices_and_indices(file, data);
     }
@@ -90,25 +89,27 @@ int parse_vertices_and_indices(FILE *file, obj_data *data) {
   while (getline(&line, &len, file) != EOF) {
     if (strncmp(line, "v ", 2) == 0) {
       vertex_counter++;
-      double x = 0, y = 0, z = 0;
+      double x, y, z;
       sscanf(line, "v %lf %lf %lf", &x, &y, &z);
       data->vertices_arr[i++] = x;
       data->vertices_arr[i++] = y;
       data->vertices_arr[i++] = z;
     } else if (strncmp(line, "f ", 2) == 0) {
       int first_index = 0;
+      bool is_first_index = false;
       char *vertex_index = strtok(line + 2, " ");
       while (vertex_index != NULL) {
         int index_val = atoi(vertex_index);
         if (index_val) {
           // If an index is negative then it relatively refers to the end
-          // of the vertex list, -1 referring to the last element.
+          // of the vertex list. For example -1 referring to the last element.
           if (index_val < 0) {
             index_val += vertex_counter + 1;
           }
           data->vertex_indices_arr[vertex_indices_counter] = index_val - 1;
-          if (!first_index) {
+          if (!is_first_index) {
             first_index = index_val - 1;
+            is_first_index = true;
           } else {
             data->vertex_indices_arr[++vertex_indices_counter] = index_val - 1;
           }
@@ -121,17 +122,35 @@ int parse_vertices_and_indices(FILE *file, obj_data *data) {
       vertex_indices_counter++;
     }
   }
-
   if (line) {
     free(line);
     line = NULL;
   }
 
-  // TO DO: CHECK VALIDATOR
-  //  if (!data->vertices_arr[data->vertices_count * 3] ||
-  //      !data->vertex_indices_arr[data->vertex_indices_count * 2]) {
-  //    parse_status = ERROR;
-  //  }
+  if (!data->vertices_arr[data->vertices_count * 3 - 1] ||
+      !data->vertex_indices_arr[data->vertex_indices_count * 2 - 1]) {
+    parse_status = ERROR;
+  }
 
   return parse_status;
+}
+
+void print_data(obj_data *data) {
+  // printing vertices
+  printf("Amount of vertex: %ld\n", data->vertices_count);
+  for (int i = 0; i < (int)data->vertices_count * 3; i++) {
+    printf("%lf ", data->vertices_arr[i]);
+    if ((i + 1) % 3 == 0) {
+      printf("\n");
+    }
+  }
+  printf("\n");
+  // printing vertex_indices
+  printf("Amount of vertex_indices: %ld\n", data->vertex_indices_count);
+  for (int i = 0; i < (int)data->vertex_indices_count * 2; i++) {
+    printf("%d ", data->vertex_indices_arr[i]);
+    if ((i + 1) % 6 == 0) {
+      printf("\n");
+    }
+  }
 }
